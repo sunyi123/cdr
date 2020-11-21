@@ -12,7 +12,7 @@ import random
 from model.tree import Tree, head_to_tree, tree_to_adj
 from utils import constant, torch_utils
 from allennlp.modules.elmo import Elmo, batch_to_ids
-from transformers import BertModel, RobertaModel
+from transformers import BertModel, RobertaModel, AutoModel
 from model import multihead_att
 
 class GCNClassifier(nn.Module):
@@ -180,7 +180,7 @@ class GCN(nn.Module):
 
         self.elmo = Elmo(opt['elmooptionsfile'], opt['elmoweightfile'], 1)
 
-        self.bert = RobertaModel.from_pretrained('./bert_model/bert_fine')
+        self.bert = AutoModel.from_pretrained('./bert_model/bert_fine')
 
         self.slf_rnn_attn = multihead_att.MultiHeadAttention(
             self.heads, self.d_model, self.d_k, self.d_k, dropout=0.2)
