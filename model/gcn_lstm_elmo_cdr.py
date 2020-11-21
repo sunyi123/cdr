@@ -257,7 +257,7 @@ class GCN(nn.Module):
         return relationvec
 
     def forward(self, adj,inputs):
-        tokens_elmoid, masks, pos, head, subj_mask, obj_mask, dis1, dis2, all_two_mesh_index, token_id, subj_positions, obj_positions, ctd_label, input_ids, attention_mask,token_type_ids = inputs # unpack
+        tokens_elmoid, masks, pos, head, subj_mask, obj_mask, dis1, dis2, all_two_mesh_index, token_id, subj_positions, obj_positions, ctd_label, input_ids, attention_mask, token_type_ids = inputs # unpack
 
         batch_size = tokens_elmoid.size()[0]
 
@@ -271,7 +271,7 @@ class GCN(nn.Module):
         elmo_embs = self.elmo(tokens_elmoid)['elmo_representations'][0]
         elmo_input = [elmo_embs]
 
-        bert_embs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
+        bert_embs = self.bert(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
         bert_input = bert_embs[0]
 
         pos_len = pos.size()[1]
