@@ -154,21 +154,21 @@ class GCN(nn.Module):
         #self.in_dim = opt['elmo_dim'] + opt['pos_dim']
         #self.in_dim = opt['elmo_dim'] + opt['pos_dim'] + opt['dis_dim'] * 2
         if opt['use_bert'] and opt['pos_dim'] > 0 and opt['dis_dim'] > 0:
-            self.bert_in_dim = opt['bert_dim'] + opt['pos_dim'] + opt['dis_dim'] * 2 + 1024
+            self.bert_in_dim = opt['bert_dim'] + opt['pos_dim'] + opt['dis_dim'] * 2 + opt['meshembedding_dim']
         elif opt['use_bert'] and opt['pos_dim'] > 0 and opt['dis_dim'] < 0:
-            self.bert_in_dim = opt['bert_dim'] + opt['pos_dim']
+            self.bert_in_dim = opt['bert_dim'] + opt['pos_dim'] + opt['meshembedding_dim']
         elif opt['use_bert'] and opt['pos_dim'] < 0 and opt['dis_dim'] > 0:
-            self.bert_in_dim = opt['bert_dim'] + opt['dis_dim'] * 2
+            self.bert_in_dim = opt['bert_dim'] + opt['dis_dim'] * 2 + opt['meshembedding_dim']
         elif opt['use_bert'] and opt['pos_dim'] < 0 and opt['dis_dim'] < 0:
-            self.bert_in_dim = opt['bert_dim']
+            self.bert_in_dim = opt['bert_dim'] + opt['meshembedding_dim']
         if opt['use_elmo'] and opt['pos_dim'] > 0 and opt['dis_dim'] > 0:
-            self.elmo_in_dim = opt['elmo_dim'] + opt['pos_dim'] + opt['dis_dim'] * 2 + 1024
+            self.elmo_in_dim = opt['elmo_dim'] + opt['pos_dim'] + opt['dis_dim'] * 2 + opt['meshembedding_dim']
         elif opt['use_elmo'] and opt['pos_dim'] > 0 and opt['dis_dim'] < 0:
-            self.elmo_in_dim = opt['elmo_dim'] + opt['pos_dim']
+            self.elmo_in_dim = opt['elmo_dim'] + opt['pos_dim'] + opt['meshembedding_dim']
         elif opt['use_elmo'] and opt['pos_dim'] < 0 and opt['dis_dim'] > 0:
-            self.elmo_in_dim = opt['elmo_dim'] + opt['dis_dim'] * 2
+            self.elmo_in_dim = opt['elmo_dim'] + opt['dis_dim'] * 2 + opt['meshembedding_dim']
         elif opt['use_elmo'] and opt['pos_dim'] < 0 and opt['dis_dim'] < 0:
-            self.elmo_in_dim = opt['elmo_dim']
+            self.elmo_in_dim = opt['elmo_dim'] + opt['meshembedding_dim']
         if not opt['use_elmo'] and not opt['use_bert'] and opt['pos_dim'] > 0 and opt['dis_dim'] > 0:
             self.woed_in_dim = opt['wordembedding_dim'] + opt['pos_dim'] + opt['dis_dim'] * 2
         elif not opt['use_elmo'] and not opt['use_bert'] and opt['pos_dim'] > 0 and opt['dis_dim'] < 0:
@@ -398,30 +398,7 @@ class GCN(nn.Module):
         # rnn_att_out_avgpool = pool(rnn_att_out, mask=None, type='avg')
         # subj_att_rnn_out = pool(rnn_att_out, subj_mask, type='max')
         # obj_att_rnn_out = pool(rnn_att_out, obj_mask, type='max')
-
-        # 加入关系向量
-        # with open('./dataset/mesh/relationVector_1000.txt', 'r') as f:
-        #     relation = f.readlines()
-        # rows = len(relation)
-        # datamat = np.zeros((rows, 1000))
-        # row = 0
-        # for line in relation:
-        #     line = line.strip().split(',')
-        #     datamat[row, :] = line[::]
-        #     row += 1
-        # relation2vec = torch.FloatTensor(datamat).cuda()
-        # relation_vec = torch.empty(batch_size, 1000).cuda()
-        # for i in range(batch_size):
-        #         relation_vec[i] = relation2vec[ctd_label[i]]
-        #         relation_vec[i] = self.know_drop(relation_vec[i])
-        #
-        # relation_vec = self.know_drop(relation_vec)
-        #
-        # rnn_att_out, attnself = self.slf_rnn_attn(bert_rnn_output, bert_rnn_output, bert_rnn_output, mask=None)
-        # rnn_att_out_maxpool = pool(rnn_att_out, mask=None, type='max')
-        # rel_att_out_maxpool = rnn_att_out_maxpool + relation_vec
-
-
+        
 
         denom = adj.sum(2).unsqueeze(2) + 1
         pool_mask = (adj.sum(2) + adj.sum(1)).eq(0).unsqueeze(2)
