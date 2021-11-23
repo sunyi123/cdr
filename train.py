@@ -35,7 +35,7 @@ parser.add_argument('--dis_range', type=int, default=200, help='dis position ran
 parser.add_argument('--num_layers', type=int, default=1, help='Num of GCN layers.')
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input dropout rate.')
 parser.add_argument('--gcn_dropout', type=float, default=0.5, help='GCN layer dropout rate.')
-parser.add_argument('--relation_dropout', type=float, default=0.95, help='relation embedding dropout rate.')
+parser.add_argument('--relation_dropout', type=float, default=0.5, help='relation embedding dropout rate.')
 parser.add_argument('--word_dropout', type=float, default=0.04, help='The rate at which randomly set a word to UNK.')
 parser.add_argument('--topn', type=int, default=1e10, help='Only finetune top N word embeddings.')
 parser.add_argument('--lower', dest='lower', action='store_true', help='Lowercase all words.')
