@@ -6,15 +6,11 @@ model for BioCreative V Track 3 CDR extraction
 * elmo embedding: [elmo-embedding](https://pan.baidu.com/s/1_8q9dlCfquBwGm_-1nh2gw) access code: e4kp
 * knowledge embedding: You should train them on CTD with TransE
 
-## run
-### do train
-```javascript
-python train.py
-```
-### do test
-```javascript
-python test.py
-```
+## Key Code
+### data/loader_cid_elmo.py: The code for preprocessing the input
+### model/gcn_lstm_elmo_cdr.py: Our model framework code
+### model/multihead_att.py: The code for the multi-head attention mechanism
+### model/trainer.py: The code for training and prediction
 
 ## contact to me
 
