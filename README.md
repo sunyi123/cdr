@@ -12,6 +12,10 @@ model for BioCreative V Track 3 CDR extraction
 * model/multihead_att.py: The code for the multi-head attention mechanism
 * model/trainer.py: The code for training and prediction
 
+## Reference
+
+the code for our model is implemented as a fork of [AGGCN](https://github.com/Cartus/AGGCN). More details please refer to their repo, many thanks for their work.
+
 ## contact to me
 
 * isakyi@dlut.mail.edu.cn
